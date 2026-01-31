@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525591285728",
+    "project_id": "vaxsafe-7220a",
+    "storage_bucket": "vaxsafe-7220a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525591285728:android:d7d6c7b4347a2a84e7a585",
+        "android_client_info": {
+          "package_name": "com.melzzz.vaxsafe_project1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_Ttb9x1sR0cbsx_NDHfAOcDGO1saJL-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
