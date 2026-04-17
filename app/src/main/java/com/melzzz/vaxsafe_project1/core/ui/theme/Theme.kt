@@ -12,21 +12,39 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = MedicalPrimary,
-    secondary = MedicalSecondary,
-    tertiary = MedicalAccent,
-    background = Color(0xFF0B0E14),
-    surface = Color(0xFF1A1F26),
-    onPrimary = Color.White
+    primary          = LilacPrimary,
+    onPrimary        = Color.White,
+    primaryContainer = SurfaceElevated,
+    secondary        = SkyBlue,
+    onSecondary      = Color.White,
+    tertiary         = LilacLight,
+    background       = BgDeepNavy,
+    surface          = SurfaceCard,
+    surfaceVariant   = SurfaceElevated,
+    onBackground     = TextOnDark,
+    onSurface        = TextOnDark,
+    onSurfaceVariant = TextMuted,
+    outline          = DividerColor,
+    error            = ErrorCoral,
+    onError          = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = MedicalPrimary,
-    secondary = MedicalSecondary,
-    tertiary = MedicalAccent,
-    background = BgLight,
-    surface = SurfaceWhite,
-    onPrimary = Color.White
+    primary          = LilacPrimary,
+    onPrimary        = Color.White,
+    primaryContainer = Color(0xFFEDE9FF),
+    secondary        = SkyBlueDark,
+    onSecondary      = Color.White,
+    tertiary         = LilacDark,
+    background       = BgLight,
+    surface          = SurfaceLight,
+    surfaceVariant   = SurfaceLightCard,
+    onBackground     = Color(0xFF1A1440),
+    onSurface        = Color(0xFF1A1440),
+    onSurfaceVariant = Color(0xFF6B6897),
+    outline          = Color(0xFFD4CFFF),
+    error            = ErrorCoral,
+    onError          = Color.White
 )
 
 @Composable
@@ -41,12 +59,12 @@ fun VaxSafeProject1Theme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
         darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        else      -> LightColorScheme
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+        typography  = Typography,
+        content     = content
     )
 }
