@@ -1,27 +1,12 @@
 package com.melzzz.vaxsafe_project1.features.vaccines.presentation.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -41,11 +26,11 @@ import com.melzzz.vaxsafe_project1.features.vaccines.presentation.components.Vac
 import com.melzzz.vaxsafe_project1.features.vaccines.presentation.viewmodels.DashboardViewModel
 import com.melzzz.vaxsafe_project1.features.vaccines.presentation.viewmodels.DashboardViewModelFactory
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     factory: DashboardViewModelFactory,
+    onLogout: () -> Unit,           // ← parámetro nuevo
     modifier: Modifier = Modifier
 ) {
     val viewModel: DashboardViewModel = viewModel(factory = factory)
@@ -62,6 +47,14 @@ fun DashboardScreen(
                             letterSpacing = 2.sp
                         )
                     )
+                },
+                actions = {                          // ← dentro del CenterAlignedTopAppBar
+                    IconButton(onClick = onLogout) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = "Cerrar sesión"
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color.Transparent,
@@ -111,9 +104,7 @@ fun DashboardScreen(
                             .padding(16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = "⚠️ Error",
                                 style = MaterialTheme.typography.titleLarge,
@@ -139,9 +130,7 @@ fun DashboardScreen(
                             .padding(16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = "💉",
                                 style = MaterialTheme.typography.displayLarge
@@ -172,11 +161,8 @@ fun DashboardScreen(
                                 vaccine = vaccine,
                                 onLocationClick = { viewModel.toggleMapSheet() },
                                 onStatusToggle = {
-                                    val newStatus = if (vaccine.status == VaccineStatus.APPLIED) {
-                                        VaccineStatus.PENDING
-                                    } else {
-                                        VaccineStatus.APPLIED
-                                    }
+                                    val newStatus = if (vaccine.status == VaccineStatus.APPLIED)
+                                        VaccineStatus.PENDING else VaccineStatus.APPLIED
                                     viewModel.updateVaccineStatus(vaccine.id, newStatus)
                                 },
                                 onDelete = { viewModel.deleteVaccine(vaccine.id) }
@@ -195,9 +181,7 @@ fun DashboardScreen(
         }
 
         if (uiState.showMapSheet) {
-            MapBottomSheet(
-                onDismiss = { viewModel.toggleMapSheet() }
-            )
+            MapBottomSheet(onDismiss = { viewModel.toggleMapSheet() })
         }
     }
 }

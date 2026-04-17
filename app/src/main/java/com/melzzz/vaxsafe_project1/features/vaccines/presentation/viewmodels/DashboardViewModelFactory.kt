@@ -7,11 +7,13 @@ import com.melzzz.vaxsafe_project1.features.vaccines.domain.usecase.DeleteVaccin
 import com.melzzz.vaxsafe_project1.features.vaccines.domain.usecase.GetVaccinesUseCase
 import com.melzzz.vaxsafe_project1.features.vaccines.domain.usecase.UpdateVaccineStatusUseCase
 
+// Actualiza el constructor para recibir el repo
 class DashboardViewModelFactory(
     private val getVaccinesUseCase: GetVaccinesUseCase,
     private val addVaccineUseCase: AddVaccineUseCase,
     private val updateVaccineStatusUseCase: UpdateVaccineStatusUseCase,
-    private val deleteVaccineUseCase: DeleteVaccineUseCase
+    private val deleteVaccineUseCase: DeleteVaccineUseCase,
+    private val authRepository: com.melzzz.vaxsafe_project1.features.auth.domain.repository.AuthRepository // <-- NUEVA LÍNEA
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -21,7 +23,8 @@ class DashboardViewModelFactory(
                 getVaccinesUseCase = getVaccinesUseCase,
                 addVaccineUseCase = addVaccineUseCase,
                 updateVaccineStatusUseCase = updateVaccineStatusUseCase,
-                deleteVaccineUseCase = deleteVaccineUseCase
+                deleteVaccineUseCase = deleteVaccineUseCase,
+                authRepository = authRepository // <-- NUEVA LÍNEA
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

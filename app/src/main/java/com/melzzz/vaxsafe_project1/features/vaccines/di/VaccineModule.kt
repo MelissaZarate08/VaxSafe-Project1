@@ -25,12 +25,14 @@ class VaccineModule(private val appContainer: AppContainer) {
         return DeleteVaccineUseCase(appContainer.vaccineRepository)
     }
 
+    // Agrega el authRepository a la factoría
     fun provideDashboardViewModelFactory(): DashboardViewModelFactory {
         return DashboardViewModelFactory(
             getVaccinesUseCase = provideGetVaccinesUseCase(),
             addVaccineUseCase = provideAddVaccineUseCase(),
             updateVaccineStatusUseCase = provideUpdateVaccineStatusUseCase(),
-            deleteVaccineUseCase = provideDeleteVaccineUseCase()
+            deleteVaccineUseCase = provideDeleteVaccineUseCase(),
+            authRepository = appContainer.authRepository // <-- NUEVO LÍNEA
         )
     }
 }

@@ -18,14 +18,25 @@ class DashboardViewModel(
     private val getVaccinesUseCase: GetVaccinesUseCase,
     private val addVaccineUseCase: AddVaccineUseCase,
     private val updateVaccineStatusUseCase: UpdateVaccineStatusUseCase,
-    private val deleteVaccineUseCase: DeleteVaccineUseCase
+    private val deleteVaccineUseCase: DeleteVaccineUseCase,
+    private val authRepository: com.melzzz.vaxsafe_project1.features.auth.domain.repository.AuthRepository // <-- NUEVA LÍNEA
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
+        loadUserProfile() // <-- Llama a esta nueva función al iniciar
         loadVaccines()
+    }
+
+    private fun loadUserProfile() {
+        viewModelScope.launch {
+            val profile = authRepository.getCurrentUserProfile()
+            if (profile != null) {
+                _uiState.update { it.copy(userProfile = profile) }
+            }
+        }
     }
 
     fun loadVaccines() {
